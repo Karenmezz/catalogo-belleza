@@ -32,7 +32,7 @@ imagenes:
   - "/images/medicube-body-peel-3.jpg"
 
 orden: 3
-cantidadDisponible: 1
+cantidadDisponible: 0
 activo: true
 ---
 
