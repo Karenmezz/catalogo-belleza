@@ -1,0 +1,8 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import CartSummary from "../components/CartSummary.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../config/site";
+---
+<BaseLayout title={`Mi selección | ${siteConfig.nombre}`} description="Revisa los productos seleccionados y consulta su disponibilidad por WhatsApp."><Header nombreTienda={siteConfig.nombre} /><main><CartSummary /></main><Footer nombreTienda={siteConfig.nombre} /></BaseLayout>

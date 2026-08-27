@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ProductCarousel from "../../components/ProductCarousel.astro";
+import QuantitySelector from "../../components/QuantitySelector.astro";
+import AddToCart from "../../components/AddToCart.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { siteConfig } from "../../config/site";
+
+export async function getStaticPaths() {
+  const products = await getCollection("products", ({ data }) => data.activo);
+  return products.map((product) => ({ params: { slug: product.id }, props: { product } }));
+}
+interface Props { product: CollectionEntry<"products">; }
+const { product } = Astro.props;
+const { nombre, categoria, descripcion, paraQueSirve = descripcion, beneficios = [], modoUso = [], recomendacion, precio: precioBase, cantidadDisponible, imagenes } = product.data;
+const categoryLabels = { maquillaje: "Maquillaje", skincare: "Skincare", "cuidado-capilar": "Cuidado capilar", "cuidado-corporal": "Cuidado corporal" } as const;
+const categoriaLabel = categoryLabels[categoria];
+const precio = new Intl.NumberFormat(siteConfig.locale, { style: "currency", currency: siteConfig.moneda, maximumFractionDigits: 0 }).format(precioBase);
+---
+<BaseLayout title={`${nombre} | ${siteConfig.nombre}`} description={descripcion}>
+  <Header nombreTienda={siteConfig.nombre} />
+  <main class="product" data-product-detail>
+    <div class="gallery"><ProductCarousel imagenes={imagenes} nombreProducto={nombre} /></div>
+    <section class="details">
+      <a class="back" href="/#productos">← Volver al catálogo</a><p class="category">{categoriaLabel}</p><h1>{nombre}</h1><p class="price">{precio}</p>
+      <p class:list={["stock", { soldout: cantidadDisponible === 0 }]}>{cantidadDisponible > 0 ? `${cantidadDisponible} unidad${cantidadDisponible === 1 ? "" : "es"} disponible${cantidadDisponible === 1 ? "" : "s"}` : "Agotado"}</p>
+      <p class="description">{descripcion}</p><div class="divider"></div>
+      {cantidadDisponible > 0 && <h2>Selecciona la cantidad</h2>}<QuantitySelector max={cantidadDisponible} /><AddToCart product={product} />
+      <div class="product-info"><article><h2>¿Para qué sirve?</h2><p>{paraQueSirve}</p></article>{beneficios.length > 0 && <article><h2>Beneficios</h2><ul>{beneficios.map((beneficio) => <li>{beneficio}</li>)}</ul></article>}{modoUso.length > 0 && <article><h2>Cómo usarlo</h2><ol>{modoUso.map((paso) => <li>{paso}</li>)}</ol></article>}{recomendacion && <aside><strong>Recomendación</strong><p>{recomendacion}</p></aside>}</div>
+    </section>
+  </main>
+  <Footer nombreTienda={siteConfig.nombre} />
+</BaseLayout>
+<style>
+.product{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:clamp(2.5rem,6vw,7rem);width:min(var(--ancho-contenido),calc(100% - 3rem));margin:auto;padding:3rem 0 6rem}.gallery{min-width:0}.details{padding:1rem 0}.back{display:inline-block;margin-bottom:3rem;color:var(--color-texto-suave);font-size:.85rem}.category{color:var(--color-principal);font-size:.75rem;font-weight:700;letter-spacing:.12rem;text-transform:uppercase}.details>h1{margin:.8rem 0 1.25rem;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1}.price{margin-bottom:.35rem;font-size:1.2rem;font-weight:700}.stock{margin:.35rem 0 1rem;color:#267a3f;font-size:.85rem;font-weight:700}.stock.soldout{color:#b42318}.description{max-width:38rem;color:var(--color-texto-suave);line-height:1.7}.divider{margin:2rem 0;border-top:1px solid var(--color-borde)}.details>h2{font-size:.95rem}.product-info{display:grid;gap:0;margin-top:2rem;border-top:1px solid var(--color-borde)}.product-info article{padding:1.35rem 0;border-bottom:1px solid var(--color-borde)}.product-info h2{margin:0 0 .7rem;font-size:1rem}.product-info p,.product-info li{color:var(--color-texto-suave);font-size:.88rem;line-height:1.65}.product-info article>p{margin:0}.product-info ul,.product-info ol{margin:0;padding-left:1.3rem}.product-info aside{margin-top:1.25rem;padding:1.1rem 1.2rem;border-left:3px solid var(--color-principal);border-radius:0 8px 8px 0;background:#fbf4f6}.product-info aside p{margin:.4rem 0 0}@media(max-width:850px){.product{grid-template-columns:1fr;width:min(100% - 2rem,var(--ancho-contenido));padding-top:1.5rem}.back{margin-bottom:2rem}.details{padding:0}}@media(max-width:420px){.details>h1{font-size:2.1rem}.product-info p,.product-info li{font-size:.84rem}}
+</style>

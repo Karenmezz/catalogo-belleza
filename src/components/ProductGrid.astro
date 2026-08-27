@@ -1,0 +1,166 @@
+---
+import ProductCard from "./ProductCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  products: CollectionEntry<"products">[];
+  titulo?: string;
+  favoritos?: boolean;
+}
+
+const { products, titulo = "Productos de belleza y skincare", favoritos = false } = Astro.props;
+---
+
+<section class="catalog" id="productos" data-product-grid data-favorites-only={favoritos ? "true" : "false"}>
+  <header class="heading">
+    <div>
+      <p class="eyebrow">{favoritos ? "Tu lista personal" : "Nuestro catálogo"}</p>
+      <h2>{titulo}</h2>
+    </div>
+
+    <p class="counter">
+      {products.length}
+      {products.length === 1 ? " producto" : " productos"}
+    </p>
+  </header>
+
+  <div class="toolbar">
+    <label class="search"><span class="sr-only">Buscar productos</span><span aria-hidden="true">⌕</span><input type="search" data-search placeholder="Buscar productos…" autocomplete="off" /></label>
+    <div class="filters" aria-label="Filtrar por categoría"><button class="active" type="button" data-filter="todos">Todos</button><button type="button" data-filter="maquillaje">Maquillaje</button><button type="button" data-filter="skincare">Skincare</button><button type="button" data-filter="cuidado-capilar">Cuidado capilar</button><button type="button" data-filter="cuidado-corporal">Cuidado corporal</button></div>
+  </div>
+
+  <div class="grid">
+    {
+      products.map((product) => (
+        <ProductCard product={product} />
+      ))
+    }
+  </div>
+  <div class="no-results" data-no-results hidden><h3>No encontramos productos</h3><p>Prueba otra búsqueda o categoría.</p></div>
+</section>
+
+<style>
+  .catalog {
+    width: min(1400px, calc(100% - 4rem));
+    margin: 0 auto;
+    padding: 5rem 0 7rem;
+  }
+
+  .heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-principal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    max-width: 45rem;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.08;
+  }
+
+  .counter {
+    margin: 0;
+    color: var(--color-texto-suave);
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    background: var(--color-superficie);
+    font-size: 0.9rem;
+  }
+
+  .search { display:flex;align-items:center;gap:.65rem;width:min(100%,390px);padding:0 1rem;border:1px solid #d5d5d5;border-radius:999px;background:#fff;box-shadow:0 2px 8px rgb(0 0 0/.04);transition:border-color .2s,box-shadow .2s; }
+  .search:focus-within { border-color:var(--color-principal);box-shadow:0 0 0 3px rgb(155 53 87/.12); }
+  .search>span:not(.sr-only) { color:var(--color-principal);font-size:1.4rem;font-weight:700;transform:rotate(-15deg); }
+  .search input { width:100%;height:44px;border:0;outline:0;background:transparent;font-size:.9rem; }
+  .search input::placeholder { color:#8a8a8a; }
+  .filters { display:flex;gap:.5rem; }
+  .filters button { padding:.72rem 1.05rem;border:1px solid #d8d8d8;border-radius:999px;background:#fff;font-size:.76rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s,transform .2s; }
+  .filters button:hover { transform:translateY(-1px); }
+  .filters button:hover,.filters button.active { color:#fff;border-color:var(--color-texto);background:var(--color-texto); }
+  .no-results { padding:5rem 1rem;text-align:center;color:var(--color-texto-suave); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem 1.35rem;
+  }
+
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1001px) and (max-width: 1250px) {
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 600px) {
+    .catalog {
+      width: min(100% - 2rem, 1400px);
+      padding: 4rem 0;
+    }
+
+    .heading {
+      display: block;
+      padding-bottom: 2rem;
+    }
+
+    .counter {
+      margin-top: 1rem;
+    }
+
+    .toolbar {
+      display: block;
+    }
+    .search { width:100%; }
+    .filters { margin-top:1rem;overflow-x:auto;padding-bottom:.25rem; }
+
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem 0.75rem;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .heading h2 { font-size: 2rem; }
+    .toolbar { font-size: .8rem; }
+  }
+</style>
+<script>
+import { getFavorites } from '../scripts/favorites';
+document.querySelectorAll<HTMLElement>('[data-product-grid]').forEach(root=>{
+  const cards=[...root.querySelectorAll<HTMLElement>('[data-product-card]')];
+  const search=root.querySelector<HTMLInputElement>('[data-search]');
+  const empty=root.querySelector<HTMLElement>('[data-no-results]');
+  let category=new URLSearchParams(location.search).get('categoria')||'todos';
+  const buttons=[...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const render=()=>{const term=(search?.value||'').trim().toLowerCase();const favoriteIds=getFavorites();let visible=0;cards.forEach(card=>{const matchesText=(card.dataset.productName||'').includes(term);const matchesCategory=category==='todos'||card.dataset.productCategory===category;const matchesFavorites=root.dataset.favoritesOnly!=='true'||favoriteIds.includes(Number(card.dataset.productId));const show=matchesText&&matchesCategory&&matchesFavorites;card.hidden=!show;if(show)visible++});if(empty)empty.hidden=visible>0;buttons.forEach(button=>button.classList.toggle('active',button.dataset.filter===category))};
+  search?.addEventListener('input',render);buttons.forEach(button=>button.addEventListener('click',()=>{category=button.dataset.filter||'todos';render()}));window.addEventListener('favorites:updated',render);render();
+});
+</script>

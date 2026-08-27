@@ -1,0 +1,208 @@
+---
+interface Props {
+  imagenes: string[];
+  nombreProducto: string;
+}
+
+const { imagenes, nombreProducto } = Astro.props;
+---
+
+<div
+  class="carrusel"
+  data-carousel
+  tabindex="0"
+  aria-label={`Imágenes de ${nombreProducto}`}
+>
+  <div class="ventana">
+    <div class="pista" data-track>
+      {
+        imagenes.map((imagen, index) => (
+          <img
+            src={imagen}
+            alt={`${nombreProducto}, imagen ${index + 1}`}
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    imagenes.length > 1 && (
+      <>
+        <button
+          class="flecha anterior"
+          type="button"
+          data-previous
+          aria-label="Ver imagen anterior"
+        >
+          ←
+        </button>
+
+        <button
+          class="flecha siguiente"
+          type="button"
+          data-next
+          aria-label="Ver imagen siguiente"
+        >
+          →
+        </button>
+      </>
+    )
+  }
+</div>
+
+<style>
+  .carrusel {
+    position: relative;
+    width: min(100%, 608px);
+    margin: 0 auto;
+  }
+  .carrusel:focus-visible {
+  outline: 3px solid var(--color-principal);
+  outline-offset: 4px;
+}
+
+  .ventana {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .pista {
+    display: flex;
+    height: 100%;
+    transition: transform 0.4s ease;
+  }
+
+  .pista img {
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    padding: .75rem;
+    object-fit: contain;
+  }
+
+  .flecha {
+    position: absolute;
+    top: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: none;
+    border-radius: 50%;
+    color: var(--color-texto);
+    background-color: var(--color-blanco);
+    box-shadow: 0 3px 12px rgb(0 0 0 / 15%);
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+
+  .flecha:hover {
+    color: var(--color-blanco);
+    background-color: var(--color-principal);
+  }
+
+  .anterior {
+    left: 1rem;
+  }
+
+  .siguiente {
+    right: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .flecha { width: 2.4rem; height: 2.4rem; }
+    .anterior { left: .6rem; }
+    .siguiente { right: .6rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pista {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const carousels = document.querySelectorAll("[data-carousel]");
+
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>("[data-track]");
+    const previousButton =
+      carousel.querySelector<HTMLButtonElement>("[data-previous]");
+    const nextButton =
+      carousel.querySelector<HTMLButtonElement>("[data-next]");
+    const images = carousel.querySelectorAll("img");
+
+    let currentImage = 0;
+    let touchStart = 0;
+
+    function showImage(index: number) {
+      if (!track || images.length === 0) return;
+
+      currentImage = (index + images.length) % images.length;
+
+      track.style.transform =
+        `translateX(-${currentImage * 100}%)`;
+    }
+
+    function showPreviousImage() {
+      showImage(currentImage - 1);
+    }
+
+    function showNextImage() {
+      showImage(currentImage + 1);
+    }
+
+    previousButton?.addEventListener(
+      "click",
+      showPreviousImage
+    );
+
+    nextButton?.addEventListener(
+      "click",
+      showNextImage
+    );
+
+    carousel.addEventListener("keydown", (event) => {
+      if (!(event instanceof KeyboardEvent)) return;
+
+      if (event.key === "ArrowLeft") {
+        showPreviousImage();
+      }
+
+      if (event.key === "ArrowRight") {
+        showNextImage();
+      }
+    });
+
+    carousel.addEventListener(
+      "touchstart",
+      (event) => {
+        if (!(event instanceof TouchEvent)) return;
+
+        touchStart = event.touches[0].clientX;
+      },
+      { passive: true }
+    );
+
+    carousel.addEventListener(
+      "touchend",
+      (event) => {
+        if (!(event instanceof TouchEvent)) return;
+
+        const touchEnd = event.changedTouches[0].clientX;
+        const distance = touchEnd - touchStart;
+
+        if (Math.abs(distance) < 50) return;
+
+        if (distance < 0) {
+          showNextImage();
+        } else {
+          showPreviousImage();
+        }
+      },
+      { passive: true }
+    );
+  });
+</script>

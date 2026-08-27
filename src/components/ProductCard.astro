@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+interface Props { product:CollectionEntry<"products">; }
+const { product }=Astro.props;
+const { nombre, categoria, descripcion, precio:precioBase, cantidadDisponible, imagenes, productId }=product.data;
+const slug=product.id;
+const categoryLabels = { maquillaje: "Maquillaje", skincare: "Skincare", "cuidado-capilar": "Cuidado capilar", "cuidado-corporal": "Cuidado corporal" } as const;
+const categoriaLabel=categoryLabels[categoria];
+const precio=new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(precioBase);
+---
+<article class="card" data-product-card data-product-id={productId} data-product-name={nombre.toLowerCase()} data-product-category={categoria}>
+  <div class="visual">
+  <a class="photo" href={`/productos/${slug}`} aria-label={`Ver detalles de ${nombre}`}>
+    <img class="primary" src={imagenes[0]} alt={nombre} loading="lazy" />
+    {imagenes[1] && <img class="secondary" src={imagenes[1]} alt="" loading="lazy" />}
+    <span class:list={["badge", { soldout: cantidadDisponible === 0 }]}>{cantidadDisponible > 0 ? `${cantidadDisponible} disponible${cantidadDisponible === 1 ? "" : "s"}` : "Agotado"}</span>
+  </a>
+  <button class="favorite" type="button" data-favorite={productId} aria-label={`Guardar ${nombre} en favoritos`} aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" /></svg></button>
+  </div>
+  <div class="content">
+    <p class="category">{categoriaLabel}</p>
+    <h3><a href={`/productos/${slug}`}>{nombre}</a></h3>
+    <p class="description">{descripcion}</p>
+    <div class="bottom"><strong>{precio}</strong><a class="button" href={`/productos/${slug}`}>Ver detalles <span aria-hidden="true">→</span></a></div>
+  </div>
+</article>
+<style>
+.card{display:flex;min-width:0;height:100%;flex-direction:column;overflow:hidden;border:1px solid #e6e6e6;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgb(0 0 0/.04);transition:transform .25s ease,box-shadow .25s ease}.card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgb(0 0 0/.09)}.visual{position:relative}.photo{position:relative;display:block;aspect-ratio:4/4.7;overflow:hidden;text-decoration:none}.photo img{position:absolute;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease,transform .4s ease}.secondary{opacity:0}.photo:hover .primary{opacity:0}.photo:hover .secondary{opacity:1;transform:scale(1.025)}.badge{position:absolute;top:.85rem;left:.85rem;padding:.5rem .7rem;border-radius:999px;background:rgba(255,255,255,.94);font-size:.62rem;font-weight:700;letter-spacing:.04rem;text-transform:uppercase}.favorite{position:absolute;top:.75rem;right:.75rem;z-index:2;display:grid;width:42px;height:42px;padding:0;place-items:center;border:1px solid #e5e5e5;border-radius:50%;background:rgba(255,255,255,.95);font-size:1.65rem;line-height:1;cursor:pointer}.favorite:hover,.favorite.active{color:#fff;background:var(--color-principal);border-color:var(--color-principal)}.content{display:flex;flex:1;flex-direction:column;padding:1rem 1.1rem 1.15rem}.category{margin:0 0 .45rem;color:var(--color-principal);font-size:.68rem;font-weight:700;letter-spacing:.08rem;text-transform:uppercase}h3{margin:0;font-size:1rem;font-weight:700;line-height:1.35}h3 a,h3 a:hover,h3 a:visited{color:var(--color-texto);text-decoration:none}.description{display:-webkit-box;min-height:2.7rem;margin:.65rem 0 1.1rem;overflow:hidden;color:var(--color-texto-suave);font-size:.82rem;line-height:1.45;-webkit-box-orient:vertical;-webkit-line-clamp:2}.bottom{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-top:auto;padding-top:.9rem;border-top:1px solid #ececec}.bottom strong{font-size:.92rem;white-space:nowrap}.button{display:inline-flex;align-items:center;gap:.4rem;padding:.68rem .8rem;border-radius:6px;color:#fff;background:var(--color-texto);font-size:.68rem;font-weight:700;letter-spacing:.035rem;text-decoration:none;text-transform:uppercase}.button:hover{background:var(--color-principal)}@media(hover:none){.secondary{display:none}.card:hover{transform:none}}@media(max-width:480px){.badge{display:none}.favorite{width:36px;height:36px;font-size:1.35rem}.content{padding:.85rem}.description{display:none}.bottom{display:block}.bottom strong{display:block;margin-bottom:.75rem}.button{justify-content:center;width:100%}}
+  .favorite{top:.8rem;right:.8rem;z-index:3;width:44px;height:44px;color:#181818;border:1px solid rgb(0 0 0/.1);background:rgba(255,255,255,.96);box-shadow:0 3px 12px rgb(0 0 0/.12);transition:color .2s,background .2s,transform .2s}.favorite svg{width:21px;height:21px;fill:transparent;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.favorite:hover{color:var(--color-principal);background:#fff;transform:scale(1.06)}.favorite.active{color:#fff;background:var(--color-principal);border-color:var(--color-principal)}.favorite.active svg{fill:currentColor;stroke:currentColor}@media(max-width:480px){.favorite{width:38px;height:38px}.favorite svg{width:19px;height:19px}}
+  .photo{aspect-ratio:1/1}.photo img{padding:.5rem;object-fit:contain}
+</style>
+<script>import { getFavorites,toggleFavorite } from '../scripts/favorites';const paint=()=>document.querySelectorAll<HTMLButtonElement>('[data-favorite]').forEach(button=>{const active=getFavorites().includes(Number(button.dataset.favorite));button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});document.querySelectorAll<HTMLButtonElement>('[data-favorite]').forEach(button=>button.addEventListener('click',()=>{toggleFavorite(Number(button.dataset.favorite));paint()}));paint();window.addEventListener('favorites:updated',paint);</script>
