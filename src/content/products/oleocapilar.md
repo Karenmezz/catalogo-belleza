@@ -1,43 +1,44 @@
 ---
-productId: 25
-nombre: "Fauno Óleo Capilar Perfeccionador"
-marca: "Fauno"
+productId: 31
+nombre: "Seapuri Scalpy Bubble Tonic"
+marca: "Seapuri"
 categoria: cuidado-capilar
-descripcion: "Óleo capilar de textura ligera formulado con una mezcla de aceites vegetales que ayuda a nutrir, suavizar y proteger la fibra capilar. Aporta brillo y contribuye a controlar el frizz sin dejar el cabello pesado."
+descripcion: "Tónico exfoliante y refrescante para el cuero cabelludo, formulado para ayudar a retirar células muertas, exceso de grasa y acumulación de productos. Su textura en espuma facilita la aplicación directa sobre el cuero cabelludo."
 
-paraQueSirve: "Ayuda a mejorar la apariencia de puntas abiertas, controlar el frizz, suavizar la fibra capilar y proteger el cabello frente al daño causado por herramientas térmicas, exposición solar y factores ambientales."
+paraQueSirve: "Ayuda a limpiar y refrescar el cuero cabelludo, eliminar acumulación y células muertas, controlar visualmente las escamas y mantener un ambiente más limpio y equilibrado para el cuidado del cabello."
 
 beneficios:
-  - "Ayuda a controlar el frizz."
-  - "Contribuye a mejorar la apariencia de puntas abiertas."
-  - "Aporta brillo y suavidad al cabello."
-  - "Ayuda a proteger la fibra capilar frente a herramientas térmicas."
-  - "Forma una película protectora sobre el cabello."
-  - "Contiene aceite de coco, girasol, jojoba y argán."
-  - "Incluye aceites de aguacate, mango y nuez de Brasil."
-  - "Ayuda a mantener el cabello hidratado y con movimiento natural."
-  - "Adecuado para todo tipo de cabello."
+  - "Contiene ácido salicílico para exfoliar suavemente el cuero cabelludo."
+  - "Ayuda a retirar células muertas y acumulación de productos."
+  - "Contribuye a limpiar el exceso de residuos alrededor de los folículos."
+  - "Contiene piroctona olamina para complementar el cuidado frente a caspa y escamas."
+  - "Incluye mentol para proporcionar una sensación refrescante."
+  - "Ayuda a aliviar la sensación de calor e incomodidad en el cuero cabelludo."
+  - "Puede utilizarse entre días de lavado para refrescar el cuero cabelludo."
+  - "Su aplicador facilita distribuir el producto directamente en la raíz."
+  - "No requiere enjuague después de la aplicación."
 
 modoUso:
-  - "Aplica una pequeña cantidad sobre las manos."
-  - "Distribuye principalmente de medios a puntas."
-  - "Concentra el producto en las zonas con mayor frizz o puntas resecas."
-  - "Peina o distribuye suavemente para conseguir una aplicación uniforme."
-  - "Utiliza una cantidad pequeña y añade más únicamente si es necesario."
-  - "Puede incorporarse a la rutina de cuidado capilar para aportar brillo y suavidad."
+  - "Agita bien el producto antes de utilizarlo para formar una espuma abundante."
+  - "Aplica directamente sobre el cuero cabelludo."
+  - "Distribuye el producto por las zonas donde exista mayor acumulación o sensación de grasa."
+  - "Masajea suavemente con el aplicador para ayudar a retirar residuos."
+  - "Deja que el producto se absorba."
+  - "Permite que el cabello y el cuero cabelludo se sequen al aire."
+  - "Puede utilizarse después del lavado o entre días de lavado según las necesidades del cuero cabelludo."
 
-recomendacion: "Comienza con pocas gotas para evitar sobrecargar el cabello, especialmente si es fino. Concéntralo en medios y puntas y evita aplicar demasiado producto directamente sobre la raíz."
+recomendacion: "Ideal para personas que presentan acumulación de productos, exceso de grasa o descamación visible en el cuero cabelludo. Evita aplicar sobre zonas irritadas o lesionadas y reduce la frecuencia de uso si notas sensibilidad."
 
-precio: 22800
+precio: 55000
 
 imagenes:
-  - "/images/oleo-1.jpg"
-  - "/images/oleo-2.jpg"
-  - "/images/oleo-3.jpg"
+  - "/images/capilar-1.jpg"
+  - "/images/capilar-2.jpg"
+  - "/images/capilar-3.jpg"
 
-orden: 25
+orden: 31
 cantidadDisponible: 1
 activo: true
 ---
 
-Un óleo nutritivo y protector para ayudar a controlar el frizz, suavizar las puntas y dejar el cabello con mayor brillo y movimiento.
+Un tónico exfoliante y refrescante para ayudar a mantener el cuero cabelludo limpio, fresco y libre de acumulación.
