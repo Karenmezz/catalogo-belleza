@@ -1,0 +1,176 @@
+---
+import { BadgeCheck, Truck, MessageCircle, CreditCard } from "@lucide/astro";
+const benefits = [
+  {
+    title: "Productos 100% originales",
+    description: "Garantía de autenticidad",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Envíos a todo el país",
+    description: "Rápidos y seguros",
+    icon: Truck,
+  },
+  {
+    title: "Compra fácil por WhatsApp",
+    description: "Te asesoramos siempre",
+    icon: MessageCircle,
+  },
+  {
+    title: "Pagos seguros",
+    description: "Múltiples métodos",
+    icon: CreditCard,
+  },
+] as const;
+---
+
+<section class="benefits" aria-label="Beneficios de comprar con nosotros">
+  <div class="benefits-inner">
+    {
+      benefits.map(({ title, description, icon: Icon }) => (
+        <article class="benefit">
+          <div class="icon" aria-hidden="true">
+            <Icon size={34} strokeWidth={1.65} />
+          </div>
+          <div class="benefit-copy">
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .benefits {
+    width: 100%;
+    border-top: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-borde);
+    background: var(--color-superficie);
+  }
+
+  .benefits-inner {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: min(1200px, calc(100% - 3rem));
+    margin-inline: auto;
+    padding: 1.65rem 0;
+  }
+
+  .benefit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    min-width: 0;
+    padding: 0 clamp(1rem, 2.5vw, 2.5rem);
+    border-right: 1px solid var(--color-borde);
+    text-align: left;
+  }
+  .benefit:last-child {
+    border-right: 0;
+  }
+  .benefit-copy {
+    min-width: 0;
+  }
+  .icon {
+    display: grid;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    place-items: center;
+    color: var(--color-principal);
+  }
+  svg {
+    width: 34px;
+    height: 34px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  h2 {
+    margin: 0 0 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  p {
+    margin: 0;
+    color: var(--color-texto-suave);
+    font-size: 0.72rem;
+    line-height: 1.3;
+    opacity: 0.72;
+  }
+  @media (max-width: 900px) {
+    .benefits-inner {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      width: min(100% - 2rem, 760px);
+      padding: 0.6rem 0;
+    }
+    .benefit {
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    .benefit:nth-child(2) {
+      border-right: 0;
+    }
+    .benefit:nth-child(3),
+    .benefit:nth-child(4) {
+      border-bottom: 0;
+    }
+    .benefit:first-child {
+      padding-left: 1rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .benefits-inner {
+      padding: 0.35rem 0;
+    }
+    .benefit,
+    .benefit:first-child,
+    .benefit:last-child {
+      gap: 0.65rem;
+      padding: 0.85rem 0.55rem;
+    }
+    .icon {
+      flex-basis: 34px;
+      width: 34px;
+      height: 34px;
+    }
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+    h2 {
+      font-size: 0.72rem;
+    }
+    p {
+      font-size: 0.66rem;
+    }
+  }
+  @media (max-width: 390px) {
+    .benefits-inner {
+      grid-template-columns: 1fr;
+    }
+    .benefit,
+    .benefit:first-child,
+    .benefit:last-child {
+      padding: 0.8rem 0.35rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    .benefit:last-child {
+      border-bottom: 0;
+    }
+    h2 {
+      font-size: 0.76rem;
+    }
+    p {
+      font-size: 0.68rem;
+    }
+  }
+</style>

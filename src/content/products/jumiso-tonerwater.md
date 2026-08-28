@@ -1,6 +1,7 @@
 ---
 productId: 27
 nombre: "JUMISO Waterfull Hyaluronic Toner"
+marca: "JUMISO"
 categoria: skincare
 descripcion: "Tónico facial hidratante de textura ligera formulado para aportar humedad a la piel y prepararla para los siguientes pasos de la rutina. Ayuda a mantener el rostro suave, flexible y con una sensación fresca."
 

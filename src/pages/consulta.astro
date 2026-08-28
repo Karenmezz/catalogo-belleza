@@ -5,22 +5,184 @@ import Footer from "../components/Footer.astro";
 import { getCollection } from "astro:content";
 import { siteConfig } from "../config/site";
 
-const entries=await getCollection("products");
-const catalog=entries.map(({id,data})=>({id:data.productId,slug:id,nombre:data.nombre,precio:data.precio,imagen:data.imagenes[0]}));
+const entries = await getCollection("products");
+const catalog = entries.map(({ id, data }) => ({
+  id: data.productId,
+  slug: id,
+  nombre: data.nombre,
+  precio: data.precio,
+  imagen: data.imagenes[0],
+}));
 ---
-<BaseLayout title={`Consulta de carrito | ${siteConfig.nombre}`} description="Productos seleccionados para consultar disponibilidad.">
+
+<BaseLayout
+  title={`Consulta de carrito | ${siteConfig.nombre}`}
+  description="Productos seleccionados para consultar disponibilidad."
+>
   <Header nombreTienda={siteConfig.nombre} />
   <main class="consultation" data-consultation data-catalog={JSON.stringify(catalog)}>
-    <header><p>Consulta compartida</p><h1>Productos por confirmar</h1><span>Esta selección fue enviada para consultar su disponibilidad.</span></header>
+    <header>
+      <p>Consulta compartida</p><h1>Productos por confirmar</h1><span
+        >Esta selección fue enviada para consultar su disponibilidad.</span
+      >
+    </header>
     <div class="items" data-consultation-items></div>
-    <div class="total"><span>Total estimado</span><strong data-consultation-total>$0</strong></div>
-    <div class="invalid" data-invalid hidden><h2>Este carrito no contiene productos válidos</h2><a href="/#productos">Ir al catálogo</a></div>
+    <div class="total">
+      <span>Total estimado</span><strong data-consultation-total>$0</strong>
+    </div>
+    <div class="invalid" data-invalid hidden>
+      <h2>Este carrito no contiene productos válidos</h2><a href="/#productos">Ir al catálogo</a>
+    </div>
   </main>
   <Footer nombreTienda={siteConfig.nombre} />
 </BaseLayout>
-<style>.consultation{width:min(900px,calc(100% - 2rem));min-height:65vh;margin:auto;padding:4rem 0 6rem}.consultation header{padding-bottom:2rem;border-bottom:1px solid var(--color-texto)}.consultation header>p{margin:0 0 .8rem;color:var(--color-principal);font-size:.72rem;font-weight:700;letter-spacing:.12rem;text-transform:uppercase}h1{margin:0 0 1rem;font-size:clamp(2.3rem,6vw,4.5rem)}header span{color:var(--color-texto-suave)}:global(.consulted-item){display:grid;grid-template-columns:110px 1fr auto;gap:1.25rem;align-items:center;padding:1.4rem 0;border-bottom:1px solid var(--color-borde)}:global(.consulted-item img){width:110px;height:125px;object-fit:cover;background:var(--color-superficie)}:global(.consulted-item h2){margin:0 0 .5rem;font-size:1rem}:global(.consulted-item p){margin:0;color:var(--color-texto-suave)}.total{display:flex;justify-content:space-between;margin-top:1.5rem;padding:1.25rem;color:#fff;background:var(--color-principal);font-size:1.1rem}.invalid{padding:4rem 0;text-align:center}.invalid a{display:inline-block;margin-top:1rem;padding:.9rem 1.2rem;color:#fff;background:var(--color-texto);text-decoration:none}@media(max-width:520px){.consultation{padding-top:2.5rem}:global(.consulted-item){grid-template-columns:80px 1fr}:global(.consulted-item img){width:80px;height:95px}:global(.consulted-item>strong){grid-column:2}}</style>
-<style>:global(.consulted-item img){width:110px;height:auto;aspect-ratio:1/1;padding:.35rem;object-fit:contain}@media(max-width:520px){:global(.consulted-item img){width:80px;height:auto}}</style>
+<style>
+  .consultation {
+    width: min(900px, calc(100% - 2rem));
+    min-height: 65vh;
+    margin: auto;
+    padding: 4rem 0 6rem;
+  }
+  .consultation header {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-texto);
+  }
+  .consultation header > p {
+    margin: 0 0 0.8rem;
+    color: var(--color-principal);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2.3rem, 6vw, 4.5rem);
+  }
+  header span {
+    color: var(--color-texto-suave);
+  }
+  :global(.consulted-item) {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--color-borde);
+  }
+  :global(.consulted-item img) {
+    width: 110px;
+    height: 125px;
+    object-fit: cover;
+    background: var(--color-superficie);
+  }
+  :global(.consulted-item h2) {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+  :global(.consulted-item p) {
+    margin: 0;
+    color: var(--color-texto-suave);
+  }
+  .total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    color: #fff;
+    background: var(--color-principal);
+    font-size: 1.1rem;
+  }
+  .invalid {
+    padding: 4rem 0;
+    text-align: center;
+  }
+  .invalid a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.9rem 1.2rem;
+    color: #fff;
+    background: var(--color-texto);
+    text-decoration: none;
+  }
+  @media (max-width: 520px) {
+    .consultation {
+      padding-top: 2.5rem;
+    }
+    :global(.consulted-item) {
+      grid-template-columns: 80px 1fr;
+    }
+    :global(.consulted-item img) {
+      width: 80px;
+      height: 95px;
+    }
+    :global(.consulted-item > strong) {
+      grid-column: 2;
+    }
+  }
+</style>
+<style>
+  :global(.consulted-item img) {
+    width: 110px;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 0.35rem;
+    object-fit: contain;
+  }
+  @media (max-width: 520px) {
+    :global(.consulted-item img) {
+      width: 80px;
+      height: auto;
+    }
+  }
+</style>
 <script>
-const root=document.querySelector<HTMLElement>('[data-consultation]');
-if(root){const catalog=JSON.parse(root.dataset.catalog||'[]');const raw=new URLSearchParams(location.search).get('items')||'';const requested=decodeURIComponent(raw).split(',').map(value=>{const [id,quantity]=value.split(':').map(Number);return{id,quantity}}).filter(item=>Number.isInteger(item.id)&&item.quantity>0);const items=requested.map(request=>{const product=catalog.find((entry:{id:number})=>entry.id===request.id);return product?{...product,cantidad:Math.min(request.quantity,99)}:null}).filter(Boolean);const money=new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});const container=root.querySelector<HTMLElement>('[data-consultation-items]');const total=items.reduce((sum:number,item:any)=>sum+item.precio*item.cantidad,0);if(container)container.innerHTML=items.map((item:any)=>`<article class="consulted-item"><img src="${item.imagen}" alt="${item.nombre}"><div><h2><a href="/productos/${item.slug}">${item.nombre}</a></h2><p>Cantidad: ${item.cantidad}</p></div><strong>${money.format(item.precio*item.cantidad)}</strong></article>`).join('');root.querySelector('[data-consultation-total]')!.textContent=money.format(total);if(items.length===0){root.querySelector<HTMLElement>('[data-invalid]')!.hidden=false;root.querySelector<HTMLElement>('.total')!.hidden=true;}}
+  const root = document.querySelector<HTMLElement>("[data-consultation]");
+  if (root) {
+    const catalog = JSON.parse(root.dataset.catalog || "[]");
+    const raw = new URLSearchParams(location.search).get("items") || "";
+    const requested = decodeURIComponent(raw)
+      .split(",")
+      .map((value) => {
+        const [id, quantity] = value.split(":").map(Number);
+        return { id, quantity };
+      })
+      .filter((item) => Number.isInteger(item.id) && item.quantity > 0);
+    const items = requested
+      .map((request) => {
+        const product = catalog.find((entry: { id: number }) => entry.id === request.id);
+        return product ? { ...product, cantidad: Math.min(request.quantity, 99) } : null;
+      })
+      .filter(Boolean);
+    const money = new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0,
+    });
+    const container = root.querySelector<HTMLElement>("[data-consultation-items]");
+    const total = items.reduce((sum: number, item: any) => sum + item.precio * item.cantidad, 0);
+    if (container) {
+      container.innerHTML = items
+        .map(
+          (item: any) => `
+            <article class="consulted-item">
+              <img src="${item.imagen}" alt="${item.nombre}">
+              <div>
+                <h2>
+                  <a href="/productos/${item.slug}">${item.nombre}</a>
+                </h2>
+                <p>Cantidad: ${item.cantidad}</p>
+              </div>
+              <strong>${money.format(item.precio * item.cantidad)}</strong>
+            </article>
+          `,
+        )
+        .join("");
+    }
+    root.querySelector("[data-consultation-total]")!.textContent = money.format(total);
+    if (items.length === 0) {
+      root.querySelector<HTMLElement>("[data-invalid]")!.hidden = false;
+      root.querySelector<HTMLElement>(".total")!.hidden = true;
+    }
+  }
 </script>

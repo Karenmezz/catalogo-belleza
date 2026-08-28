@@ -1,6 +1,7 @@
 ---
 productId: 9
 nombre: "Pestañina 3 Dimension TOPFACE"
+marca: "TOPFACE"
 categoria: maquillaje
 descripcion: "Máscara de pestañas con efecto 3D diseñada para aportar volumen, longitud y definición. Su fórmula ligera y su cepillo de precisión ayudan a separar y realzar cada pestaña para conseguir una mirada más intensa."
 

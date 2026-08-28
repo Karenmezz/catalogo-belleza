@@ -5,4 +5,11 @@ import CartSummary from "../components/CartSummary.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../config/site";
 ---
-<BaseLayout title={`Mi selección | ${siteConfig.nombre}`} description="Revisa los productos seleccionados y consulta su disponibilidad por WhatsApp."><Header nombreTienda={siteConfig.nombre} /><main><CartSummary /></main><Footer nombreTienda={siteConfig.nombre} /></BaseLayout>
+
+<BaseLayout
+  title={`Mi carrito | ${siteConfig.nombre}`}
+  description="Revisa los productos de tu carrito y consulta su disponibilidad por WhatsApp."
+  ><Header nombreTienda={siteConfig.nombre} /><main>
+    <CartSummary />
+  </main><Footer nombreTienda={siteConfig.nombre} /></BaseLayout
+>

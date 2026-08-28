@@ -1,6 +1,7 @@
 ---
 productId: 11
 nombre: "BONCEPT Retinol 2500 IU Wrinkle-Shot Perfector"
+marca: "BONCEPT"
 categoria: skincare
 descripcion: "Crema facial intensiva con retinol 2500 IU y bakuchiol, diseñada para mejorar la apariencia de líneas finas, arrugas, textura irregular y pérdida de firmeza."
 

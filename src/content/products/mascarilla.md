@@ -1,6 +1,7 @@
 ---
 productId: 6
 nombre: "SKIN1004 Madagascar Centella Poremizing Quick Clay Stick Mask"
+marca: "SKIN1004"
 categoria: skincare
 descripcion: "Mascarilla facial de arcilla en barra formulada con cinco tipos de arcilla, centella asiática y polvo fino de frijol rojo. Ayuda a absorber el exceso de grasa, limpiar los poros y mejorar la apariencia de la textura de la piel."
 

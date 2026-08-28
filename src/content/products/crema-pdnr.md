@@ -1,6 +1,7 @@
 ---
 productId: 16
 nombre: "Medicube PDRN Pink Collagen Capsule Cream"
+marca: "Medicube"
 categoria: skincare
 descripcion: "Crema facial de doble textura que combina un gel ligero con cápsulas rosas enriquecidas con PDRN, colágeno y niacinamida. Ayuda a hidratar, iluminar y mejorar la apariencia de la firmeza y el tono desigual de la piel."
 

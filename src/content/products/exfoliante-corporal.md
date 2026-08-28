@@ -1,6 +1,7 @@
 ---
 productId: 3
 nombre: "Medicube Body Peel Shot"
+marca: "Medicube"
 categoria: cuidado-corporal
 descripcion: "Exfoliante corporal de textura ligera formulado con ácido kójico, cúrcuma, BHA, LHA y PHA. Ayuda a remover células muertas, mejorar la apariencia de la textura irregular y dejar la piel con un aspecto más uniforme y luminoso."
 

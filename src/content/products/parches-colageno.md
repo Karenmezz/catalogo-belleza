@@ -1,6 +1,7 @@
 ---
 productId: 1
 nombre: "Medicube PDRN Caffeine Collagen Eye Patch"
+marca: "Medicube"
 categoria: skincare
 descripcion: "Parches de gel para el contorno de ojos formulados con PDRN, cafeína, colágeno y retinol. Ayudan a hidratar, refrescar y mejorar la apariencia de bolsas, ojeras y líneas finas."
 

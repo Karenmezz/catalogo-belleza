@@ -1,6 +1,7 @@
 ---
 productId: 14
 nombre: "CENTELLIAN24 Madeca Cream Time Reverse"
+marca: "CENTELLIAN24"
 categoria: skincare
 descripcion: "Crema facial antiedad formulada con centella asiática, retinol, ceramidas y ácido hialurónico. Ayuda a hidratar profundamente, mejorar la firmeza y suavizar la apariencia de líneas finas mientras fortalece la barrera de la piel."
 

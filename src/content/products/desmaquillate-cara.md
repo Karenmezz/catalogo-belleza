@@ -1,6 +1,7 @@
 ---
 productId: 7
 nombre: "APRILSKIN Carrotene IPMP Hydromelt Cleansing Balm"
+marca: "APRILSKIN"
 categoria: skincare
 descripcion: "Bálsamo limpiador facial de textura fundente que ayuda a remover maquillaje, protector solar, exceso de grasa e impurezas acumuladas en la piel, dejando el rostro limpio y confortable."
 

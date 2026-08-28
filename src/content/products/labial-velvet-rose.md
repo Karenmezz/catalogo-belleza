@@ -1,6 +1,7 @@
 ---
 productId: 2
 nombre: "APRILSKIN Hero Allday Plumping Lip Stain - Rose"
+marca: "APRILSKIN"
 categoria: maquillaje
 descripcion: "Tinte labial de larga duración con efecto voluminizador y acabado natural. Su fórmula deja una capa de color uniforme después de retirar el producto y ayuda a que los labios luzcan más definidos y con mayor volumen."
 

@@ -10,29 +10,382 @@ import { siteConfig } from "../../config/site";
 
 export async function getStaticPaths() {
   const products = await getCollection("products", ({ data }) => data.activo);
-  return products.map((product) => ({ params: { slug: product.id }, props: { product } }));
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product },
+  }));
 }
-interface Props { product: CollectionEntry<"products">; }
+interface Props {
+  product: CollectionEntry<"products">;
+}
 const { product } = Astro.props;
-const { nombre, categoria, descripcion, paraQueSirve = descripcion, beneficios = [], modoUso = [], recomendacion, precio: precioBase, cantidadDisponible, imagenes } = product.data;
-const categoryLabels = { maquillaje: "Maquillaje", skincare: "Skincare", "cuidado-capilar": "Cuidado capilar", "cuidado-corporal": "Cuidado corporal" } as const;
-const categoriaLabel = categoryLabels[categoria];
-const precio = new Intl.NumberFormat(siteConfig.locale, { style: "currency", currency: siteConfig.moneda, maximumFractionDigits: 0 }).format(precioBase);
+const {
+  productId,
+  nombre,
+  categoria,
+  descripcion,
+  paraQueSirve = descripcion,
+  beneficios = [],
+  modoUso = [],
+  recomendacion,
+  precio: precioBase,
+  cantidadDisponible,
+  imagenes,
+} = product.data;
+const labels = {
+  maquillaje: "Maquillaje",
+  skincare: "Skincare",
+  "cuidado-capilar": "Cuidado capilar",
+  "cuidado-corporal": "Cuidado corporal",
+} as const;
+const categoriaLabel = labels[categoria];
+const precio = new Intl.NumberFormat(siteConfig.locale, {
+  style: "currency",
+  currency: siteConfig.moneda,
+  maximumFractionDigits: 0,
+}).format(precioBase);
 ---
+
 <BaseLayout title={`${nombre} | ${siteConfig.nombre}`} description={descripcion}>
   <Header nombreTienda={siteConfig.nombre} />
   <main class="product" data-product-detail>
-    <div class="gallery"><ProductCarousel imagenes={imagenes} nombreProducto={nombre} /></div>
+    <section class="gallery">
+      <ProductCarousel imagenes={imagenes} nombreProducto={nombre} />
+    </section>
     <section class="details">
-      <a class="back" href="/#productos">← Volver al catálogo</a><p class="category">{categoriaLabel}</p><h1>{nombre}</h1><p class="price">{precio}</p>
-      <p class:list={["stock", { soldout: cantidadDisponible === 0 }]}>{cantidadDisponible > 0 ? `${cantidadDisponible} unidad${cantidadDisponible === 1 ? "" : "es"} disponible${cantidadDisponible === 1 ? "" : "s"}` : "Agotado"}</p>
-      <p class="description">{descripcion}</p><div class="divider"></div>
-      {cantidadDisponible > 0 && <h2>Selecciona la cantidad</h2>}<QuantitySelector max={cantidadDisponible} /><AddToCart product={product} />
-      <div class="product-info"><article><h2>¿Para qué sirve?</h2><p>{paraQueSirve}</p></article>{beneficios.length > 0 && <article><h2>Beneficios</h2><ul>{beneficios.map((beneficio) => <li>{beneficio}</li>)}</ul></article>}{modoUso.length > 0 && <article><h2>Cómo usarlo</h2><ol>{modoUso.map((paso) => <li>{paso}</li>)}</ol></article>}{recomendacion && <aside><strong>Recomendación</strong><p>{recomendacion}</p></aside>}</div>
+      <nav class="breadcrumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a><span>/</span><a href={`/?categoria=${categoria}#productos`}
+          >{categoriaLabel}</a
+        ><span>/</span><span>{nombre}</span>
+      </nav>
+      <div class="title-row">
+        <h1>{nombre}</h1><button
+          class="favorite-detail"
+          type="button"
+          data-detail-favorite={productId}
+          aria-label={`Guardar ${nombre} en favoritos`}
+          aria-pressed="false"
+          ><svg viewBox="0 0 24 24" aria-hidden="true"
+            ><path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
+            ></path></svg
+          ></button
+        >
+      </div>
+      <p class="price">{precio}</p><p class="description">{descripcion}</p>
+      {
+        beneficios.length > 0 && (
+          <div class="benefit-chips">
+            {beneficios.slice(0, 4).map((beneficio) => (
+              <span>✦ {beneficio}</span>
+            ))}
+          </div>
+        )
+      }
+      <p class:list={["stock", { soldout: cantidadDisponible === 0 }]}>
+        <i></i>{
+          cantidadDisponible > 0
+            ? `${cantidadDisponible} unidad${cantidadDisponible === 1 ? "" : "es"} disponible${cantidadDisponible === 1 ? "" : "s"}`
+            : "Producto agotado"
+        }
+      </p>
+      <div class="purchase-row">
+        <QuantitySelector max={cantidadDisponible} /><AddToCart product={product} />
+      </div>
+      <div class="accordions">
+        <details open>
+          <summary>Descripción</summary><div class="panel">
+            <p>{paraQueSirve}</p>
+          </div>
+        </details>
+        {
+          beneficios.length > 0 && (
+            <details>
+              <>
+                <summary>Beneficios</summary>
+                <div class="panel">
+                  <ul>
+                    {beneficios.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            </details>
+          )
+        }
+        {
+          modoUso.length > 0 && (
+            <details>
+              <>
+                <summary>Modo de uso</summary>
+                <div class="panel">
+                  <ol>
+                    {modoUso.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ol>
+                </div>
+              </>
+            </details>
+          )
+        }
+        <details>
+          <summary>Envíos y recomendación</summary><div class="panel">
+            <p>
+              {
+                recomendacion ??
+                  "Realizamos envíos a todo el país. Confirma disponibilidad y tiempos de entrega por WhatsApp."
+              }
+            </p>
+          </div>
+        </details>
+      </div>
     </section>
   </main>
   <Footer nombreTienda={siteConfig.nombre} />
 </BaseLayout>
 <style>
-.product{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:clamp(2.5rem,6vw,7rem);width:min(var(--ancho-contenido),calc(100% - 3rem));margin:auto;padding:3rem 0 6rem}.gallery{min-width:0}.details{padding:1rem 0}.back{display:inline-block;margin-bottom:3rem;color:var(--color-texto-suave);font-size:.85rem}.category{color:var(--color-principal);font-size:.75rem;font-weight:700;letter-spacing:.12rem;text-transform:uppercase}.details>h1{margin:.8rem 0 1.25rem;font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1}.price{margin-bottom:.35rem;font-size:1.2rem;font-weight:700}.stock{margin:.35rem 0 1rem;color:#267a3f;font-size:.85rem;font-weight:700}.stock.soldout{color:#b42318}.description{max-width:38rem;color:var(--color-texto-suave);line-height:1.7}.divider{margin:2rem 0;border-top:1px solid var(--color-borde)}.details>h2{font-size:.95rem}.product-info{display:grid;gap:0;margin-top:2rem;border-top:1px solid var(--color-borde)}.product-info article{padding:1.35rem 0;border-bottom:1px solid var(--color-borde)}.product-info h2{margin:0 0 .7rem;font-size:1rem}.product-info p,.product-info li{color:var(--color-texto-suave);font-size:.88rem;line-height:1.65}.product-info article>p{margin:0}.product-info ul,.product-info ol{margin:0;padding-left:1.3rem}.product-info aside{margin-top:1.25rem;padding:1.1rem 1.2rem;border-left:3px solid var(--color-principal);border-radius:0 8px 8px 0;background:#fbf4f6}.product-info aside p{margin:.4rem 0 0}@media(max-width:850px){.product{grid-template-columns:1fr;width:min(100% - 2rem,var(--ancho-contenido));padding-top:1.5rem}.back{margin-bottom:2rem}.details{padding:0}}@media(max-width:420px){.details>h1{font-size:2.1rem}.product-info p,.product-info li{font-size:.84rem}}
+  .product {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+    gap: clamp(2.5rem, 5vw, 5.5rem);
+    width: min(1280px, calc(100% - 3rem));
+    margin: auto;
+    padding: 3rem 0 5rem;
+  }
+  .gallery {
+    min-width: 0;
+  }
+  .details {
+    min-width: 0;
+    padding: 0.25rem 0;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    color: var(--color-texto-suave);
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+  .breadcrumb a {
+    text-decoration: none;
+  }
+  .breadcrumb span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .title-row h1 {
+    flex: 1;
+    margin: 0;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1.08;
+  }
+  .favorite-detail {
+    display: grid;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--color-borde);
+    border-radius: 50%;
+    color: var(--color-texto);
+    background: #fff;
+    cursor: pointer;
+  }
+  .favorite-detail svg {
+    width: 22px;
+    height: 22px;
+    fill: transparent;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+  .favorite-detail:hover,
+  .favorite-detail.active {
+    color: #fff;
+    border-color: var(--color-principal);
+    background: var(--color-principal);
+  }
+  .favorite-detail.active svg {
+    fill: currentColor;
+  }
+  .price {
+    margin: 1rem 0;
+    font-size: 1.45rem;
+    font-weight: 800;
+  }
+  .description {
+    margin: 0;
+    color: var(--color-texto-suave);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .benefit-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 1rem;
+    margin: 1.25rem 0;
+  }
+  .benefit-chips span {
+    max-width: 100%;
+    overflow: hidden;
+    color: #666;
+    font-size: 0.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .stock {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 1.35rem 0 0.9rem;
+    color: #23834b;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .stock i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #28c76f;
+    box-shadow: 0 0 0 4px #e6f8ed;
+  }
+  .stock.soldout {
+    color: #a44242;
+  }
+  .stock.soldout i {
+    background: #c05b5b;
+    box-shadow: 0 0 0 4px #f8eaea;
+  }
+  .purchase-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.4rem;
+  }
+  .purchase-row :global(.purchase) {
+    flex: 1;
+    margin-top: 0;
+  }
+  .purchase-row :global(.add) {
+    min-height: 50px;
+    border-radius: 7px;
+  }
+  .purchase-row :global(.feedback) {
+    position: absolute;
+  }
+  .purchase-row :global(.quantity) {
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .accordions {
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--color-borde);
+  }
+  details {
+    border-bottom: 1px solid var(--color-borde);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.05rem 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: "+";
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+  details[open] summary::after {
+    content: "−";
+  }
+  .panel {
+    padding: 0 0 1.2rem;
+  }
+  .panel p,
+  .panel li {
+    margin-top: 0;
+    color: var(--color-texto-suave);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  .panel ul,
+  .panel ol {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  @media (max-width: 850px) {
+    .product {
+      grid-template-columns: 1fr;
+      width: min(100% - 2rem, 700px);
+      padding: 1.5rem 0 4rem;
+    }
+    .details {
+      padding-top: 0;
+    }
+    .breadcrumb {
+      margin-top: 0.5rem;
+    }
+    .title-row h1 {
+      font-size: clamp(1.8rem, 7vw, 2.6rem);
+    }
+  }
+  @media (max-width: 480px) {
+    .product {
+      width: calc(100% - 1.5rem);
+      gap: 1.5rem;
+    }
+    .purchase-row {
+      gap: 0.5rem;
+    }
+    .purchase-row :global(.quantity) {
+      grid-template-columns: 38px 48px 38px;
+    }
+    .purchase-row :global(.add) {
+      font-size: 0.7rem;
+      letter-spacing: 0.035rem;
+    }
+    .benefit-chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .favorite-detail {
+      flex-basis: 42px;
+      width: 42px;
+      height: 42px;
+    }
+  }
 </style>
+<script>
+  import { getFavorites, toggleFavorite } from "../../scripts/favorites";
+  const paint = () =>
+    document.querySelectorAll<HTMLButtonElement>("[data-detail-favorite]").forEach((button) => {
+      const active = getFavorites().includes(Number(button.dataset.detailFavorite));
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  document.querySelectorAll<HTMLButtonElement>("[data-detail-favorite]").forEach((button) =>
+    button.addEventListener("click", () => {
+      toggleFavorite(Number(button.dataset.detailFavorite));
+      paint();
+    }),
+  );
+  paint();
+  window.addEventListener("favorites:updated", paint);
+</script>

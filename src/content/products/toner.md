@@ -1,6 +1,7 @@
 ---
 productId: 19
 nombre: "S.NATURE Aqua Oasis Toner"
+marca: "S.NATURE"
 categoria: skincare
 descripcion: "Tónico facial hidratante y calmante de textura ligera, formulado con múltiples tipos de ácido hialurónico, pantenol y PHA. Ayuda a aportar hidratación, suavizar la piel y mejorar visualmente la textura sin dejar una sensación pesada."
 

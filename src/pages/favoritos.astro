@@ -5,11 +5,18 @@ import ProductGrid from "../components/ProductGrid.astro";
 import Footer from "../components/Footer.astro";
 import { getCollection } from "astro:content";
 import { siteConfig } from "../config/site";
-const products = (await getCollection("products", ({ data }) => data.activo))
-  .sort((a, b) => a.data.orden - b.data.orden);
+const products = (await getCollection("products", ({ data }) => data.activo)).sort(
+  (a, b) => a.data.orden - b.data.orden,
+);
 ---
-<BaseLayout title={`Favoritos | ${siteConfig.nombre}`} description="Tus productos de belleza y skincare favoritos.">
+
+<BaseLayout
+  title={`Favoritos | ${siteConfig.nombre}`}
+  description="Tus productos de belleza y skincare favoritos."
+>
   <Header nombreTienda={siteConfig.nombre} />
-  <main><ProductGrid products={products} titulo="Mis productos favoritos" favoritos={true} /></main>
+  <main>
+    <ProductGrid products={products} titulo="Mis productos favoritos" favoritos={true} />
+  </main>
   <Footer nombreTienda={siteConfig.nombre} />
 </BaseLayout>

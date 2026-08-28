@@ -1,6 +1,7 @@
 ---
 productId: 4
 nombre: "Medicube Hypochlorous Acid Rice Peel Shot"
+marca: "Medicube"
 categoria: skincare
 descripcion: "Sérum exfoliante facial suave formulado con ácido hipocloroso y extracto de arroz. Ayuda a eliminar células muertas e impurezas, controlar el exceso de grasa y mejorar la apariencia de la textura y los poros."
 

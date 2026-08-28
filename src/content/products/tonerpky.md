@@ -1,6 +1,7 @@
 ---
 productId: 22
 nombre: "Pyunkang Yul Essence Toner"
+marca: "Pyunkang Yul"
 categoria: skincare
 descripcion: "Tónico-esencia facial de textura ligeramente viscosa y fórmula minimalista, diseñado para aportar hidratación intensa, suavidad y confort a la piel sin dejar una sensación pesada."
 

@@ -1,6 +1,7 @@
 ---
 productId: 23
 nombre: "Mary&May SEOUL EDITION Rice Niacin 10% Triple Vitamin Serum"
+marca: "Mary&May"
 categoria: skincare
 descripcion: "Sérum facial iluminador de textura ligera formulado con 10% de niacinamida, extracto de arroz y una combinación de vitaminas C, E y B5. Ayuda a mejorar la luminosidad y la apariencia del tono desigual sin dejar sensación pegajosa."
 

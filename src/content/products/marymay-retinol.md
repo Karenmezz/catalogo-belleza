@@ -1,6 +1,7 @@
 ---
 productId: 12
 nombre: "Mary&May SEOUL EDITION Retinol 0.1% Bakuchiol Cica Serum"
+marca: "Mary&May"
 categoria: skincare
 descripcion: "Sérum facial de tratamiento formulado con 0,1% de retinol, bakuchiol, centella asiática y péptidos. Ayuda a mejorar la apariencia de líneas finas, textura irregular, poros y pérdida de firmeza."
 

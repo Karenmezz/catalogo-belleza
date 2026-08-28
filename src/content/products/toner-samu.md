@@ -1,6 +1,7 @@
 ---
 productId: 26
 nombre: "SAM'U Galacto Pore O2 Toner"
+marca: "SAM'U"
 categoria: skincare
 descripcion: "Tónico facial ligero con efecto de burbujas de oxígeno, formulado con Galactomyces, PHA, hamamelis y ácido hialurónico. Ayuda a hidratar, suavizar la textura y mejorar visualmente la apariencia de los poros."
 

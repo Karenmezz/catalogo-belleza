@@ -1,6 +1,7 @@
 ---
 productId: 24
 nombre: "JUMISO Niacinamide 10% Serum"
+marca: "JUMISO"
 categoria: skincare
 descripcion: "Sérum facial iluminador de textura ligera formulado con 10% de niacinamida, ácido tranexámico y glutatión. Ayuda a mejorar la apariencia de manchas, tono desigual y enrojecimiento mientras aporta hidratación sin dejar sensación pesada."
 

@@ -1,6 +1,7 @@
 ---
 productId: 13
 nombre: "K-SECRET SEOUL 1988 Capsule Cream Niacinamide 5% + Yuja"
+marca: "K-SECRET"
 categoria: skincare
 descripcion: "Crema facial hidratante e iluminadora formulada con 5% de niacinamida y yuzu. Su textura combina una base de gel hidratante con cápsulas que ayudan a mejorar la luminosidad, la textura y la apariencia del tono desigual."
 

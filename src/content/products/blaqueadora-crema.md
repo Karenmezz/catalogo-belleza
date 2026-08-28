@@ -1,6 +1,7 @@
 ---
 productId: 18
 nombre: "COSNORI Whitening Dress Tone-Up Cream"
+marca: "COSNORI"
 categoria: skincare
 descripcion: "Crema facial de tono con acabado mate que ayuda a iluminar visualmente la piel y mejorar la apariencia del tono desigual. Su textura ligera se distribuye fácilmente y deja un acabado uniforme y natural."
 

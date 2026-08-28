@@ -1,9 +1,77 @@
 ---
 import type { CollectionEntry } from "astro:content";
-interface Props { product:CollectionEntry<"products">; }
+interface Props {
+  product: CollectionEntry<"products">;
+}
 const { product } = Astro.props;
 const { productId, nombre, precio, cantidadDisponible, imagenes } = product.data;
 ---
-<div class="purchase" data-add-container data-product={JSON.stringify({id:productId,slug:product.id,nombre,precio,imagen:imagenes[0],stock:cantidadDisponible})}><button class="add" type="button" data-add disabled={cantidadDisponible === 0}>{cantidadDisponible > 0 ? "Agregar a mi selección" : "Producto agotado"}</button><p class="feedback" data-feedback role="status" aria-live="polite"></p></div>
-<style>.purchase{margin-top:1rem}.add{width:100%;min-height:54px;border:0;color:#fff;background:var(--color-principal);font-size:.82rem;font-weight:700;letter-spacing:.07rem;text-transform:uppercase;cursor:pointer}.add:hover{background:var(--color-principal-oscuro)}.add:disabled{background:#aaa;cursor:not-allowed}.feedback{min-height:1.2rem;margin:.65rem 0 0;color:var(--color-whatsapp);font-size:.85rem;font-weight:700}</style>
-<script>import { addToCart } from "../scripts/cart";document.querySelectorAll<HTMLElement>('[data-add-container]').forEach((root)=>{root.querySelector('[data-add]')?.addEventListener('click',()=>{const product=JSON.parse(root.dataset.product||'{}');if(product.stock<1)return;const section=root.closest('[data-product-detail]');const input=section?.querySelector<HTMLInputElement>('[data-quantity-input]');addToCart({...product,cantidad:Math.min(product.stock,Math.max(1,Number(input?.value||1)))});const feedback=root.querySelector('[data-feedback]');if(feedback)feedback.textContent='Producto agregado. Puedes seguir comprando o revisar tu selección.';setTimeout(()=>{if(feedback)feedback.textContent=''},3500)})});</script>
+
+<div
+  class="purchase"
+  data-add-container
+  data-product={JSON.stringify({
+    id: productId,
+    slug: product.id,
+    nombre,
+    precio,
+    imagen: imagenes[0],
+    stock: cantidadDisponible,
+  })}
+>
+  <button class="add" type="button" data-add disabled={cantidadDisponible === 0}
+    >{cantidadDisponible > 0 ? "Agregar al carrito" : "Producto agotado"}</button
+  ><p class="feedback" data-feedback role="status" aria-live="polite"></p>
+</div>
+<style>
+  .purchase {
+    margin-top: 1rem;
+  }
+  .add {
+    width: 100%;
+    min-height: 54px;
+    border: 0;
+    color: #fff;
+    background: var(--color-principal);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.07rem;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .add:hover {
+    background: var(--color-principal-oscuro);
+  }
+  .add:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+  .feedback {
+    min-height: 1.2rem;
+    margin: 0.65rem 0 0;
+    color: var(--color-whatsapp);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+</style>
+<script>
+  import { addToCart } from "../scripts/cart";
+  document.querySelectorAll<HTMLElement>("[data-add-container]").forEach((root) => {
+    root.querySelector("[data-add]")?.addEventListener("click", () => {
+      const product = JSON.parse(root.dataset.product || "{}");
+      if (product.stock < 1) return;
+      const section = root.closest("[data-product-detail]");
+      const input = section?.querySelector<HTMLInputElement>("[data-quantity-input]");
+      addToCart({
+        ...product,
+        cantidad: Math.min(product.stock, Math.max(1, Number(input?.value || 1))),
+      });
+      const feedback = root.querySelector("[data-feedback]");
+      if (feedback)
+        feedback.textContent = "Producto agregado. Puedes seguir comprando o revisar tu carrito.";
+      setTimeout(() => {
+        if (feedback) feedback.textContent = "";
+      }, 3500);
+    });
+  });
+</script>

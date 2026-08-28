@@ -1,6 +1,7 @@
 ---
 productId: 21
 nombre: "JUMISO Niacinamide 2+ Pore Smoothing Toner"
+marca: "JUMISO"
 categoria: skincare
 descripcion: "Tónico facial ligero formulado con 2% de niacinamida, PHA y BHA. Ayuda a mejorar la apariencia de los poros, suavizar la textura irregular y equilibrar el exceso de grasa sin dejar una sensación pesada."
 

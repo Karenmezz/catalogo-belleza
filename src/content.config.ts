@@ -7,7 +7,13 @@ const products = defineCollection({
   schema: z.object({
     productId: z.number().int().positive(),
     nombre: z.string().min(2),
-    categoria: z.enum(["maquillaje", "skincare", "cuidado-capilar", "cuidado-corporal"]),
+    marca: z.string().min(2),
+    categoria: z.enum([
+      "maquillaje",
+      "skincare",
+      "cuidado-capilar",
+      "cuidado-corporal",
+    ]),
     descripcion: z.string().min(10),
     paraQueSirve: z.string().min(10),
     beneficios: z.array(z.string().min(3)).min(1),

@@ -1,6 +1,7 @@
 ---
 productId: 15
 nombre: "Medicube 3H Daily Relief Cream"
+marca: "Medicube"
 categoria: skincare
 descripcion: "Crema facial hidratante y calmante de textura ligera, formulada para ayudar a aliviar la apariencia de irritación, resequedad y enrojecimiento mientras apoya la barrera natural de la piel."
 

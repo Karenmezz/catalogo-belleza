@@ -1,6 +1,7 @@
 ---
 productId: 25
 nombre: "Fauno Óleo Capilar Perfeccionador"
+marca: "Fauno"
 categoria: cuidado-capilar
 descripcion: "Óleo capilar de textura ligera formulado con una mezcla de aceites vegetales que ayuda a nutrir, suavizar y proteger la fibra capilar. Aporta brillo y contribuye a controlar el frizz sin dejar el cabello pesado."
 

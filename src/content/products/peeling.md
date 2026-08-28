@@ -1,6 +1,7 @@
 ---
 productId: 20
 nombre: "Centellian24 Madeca Matcha Toning Peeling Gel"
+marca: "CENTELLIAN24"
 categoria: skincare
 descripcion: "Gel exfoliante facial de baja irritación formulado con matcha, centella asiática y una combinación de exfoliantes físicos y químicos. Ayuda a remover células muertas, exceso de sebo e impurezas mientras mejora la apariencia de la textura y luminosidad de la piel."
 

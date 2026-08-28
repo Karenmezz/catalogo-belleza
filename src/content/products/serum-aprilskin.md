@@ -1,6 +1,7 @@
 ---
 productId: 17
 nombre: "APRILSKIN A.C.E Mugwort Centella Calming Serum"
+marca: "APRILSKIN"
 categoria: skincare
 descripcion: "Sérum facial calmante de textura ligera formulado con artemisa y centella asiática. Ayuda a hidratar, aliviar la sensación de incomodidad y mantener la piel con una apariencia más equilibrada y saludable."
 

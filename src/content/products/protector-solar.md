@@ -1,6 +1,7 @@
 ---
 productId: 5
 nombre: "NATURE REPUBLIC California Aloe Fresh Powdery Sun Stick SPF 50+"
+marca: "NATURE REPUBLIC"
 categoria: skincare
 descripcion: "Protector solar en barra de textura ligera y acabado empolvado, formulado con aloe vera de California. Ofrece protección de amplio espectro SPF 50+ y ayuda a proteger la piel de la exposición diaria a los rayos UV sin dejar una sensación pesada o pegajosa."
 
