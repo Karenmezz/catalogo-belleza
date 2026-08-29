@@ -1,6 +1,6 @@
 ---
 productId: 8
-nombre: "Polvo de Hadas Engol Collections"
+nombre: "Engol Collections Polvo de Hadas"
 marca: "Engol Collections"
 categoria: maquillaje
 descripcion: "Iluminador suelto con partículas finas y reflectantes que aportan brillo y luminosidad a la piel. Su formato permite aplicarlo en rostro, cuerpo o cabello para crear un acabado radiante."

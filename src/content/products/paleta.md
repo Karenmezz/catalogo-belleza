@@ -1,6 +1,6 @@
 ---
 productId: 10
-nombre: "Paleta Essentials ENG-12 - Engol Collections"
+nombre: "Engol Collections Paleta Essentials ENG-12"
 marca: "Engol Collections"
 categoria: maquillaje
 descripcion: "Paleta compacta de sombras en formato viajero, diseñada para crear looks versátiles con tonalidades fáciles de combinar. Incluye acabados mate y satinados y espejo integrado."

@@ -22,6 +22,11 @@ const categoryLabels = {
   "cuidado-corporal": "Cuidado corporal",
 } as const;
 const categoriaLabel = categoryLabels[categoria];
+const nombreEmpiezaConMarca = nombre
+  .trimStart()
+  .toLocaleLowerCase("es")
+  .startsWith(marca.toLocaleLowerCase("es"));
+const nombreSinMarca = nombreEmpiezaConMarca ? nombre.trimStart().slice(marca.length) : nombre;
 const precio = new Intl.NumberFormat("es-CO", {
   style: "currency",
   currency: "COP",
@@ -36,6 +41,7 @@ const precio = new Intl.NumberFormat("es-CO", {
   data-product-name={`${nombre} ${marca}`.toLowerCase()}
   data-product-brand={marca.toLowerCase()}
   data-product-price={precioBase}
+  data-product-order={product.data.orden}
   data-product-category={categoria}
 >
   <div class="visual">
@@ -65,7 +71,11 @@ const precio = new Intl.NumberFormat("es-CO", {
   </div>
   <div class="content">
     <p class="category">{categoriaLabel}</p>
-    <h3><a href={`/productos/${slug}`}>{nombre}</a></h3>
+    <h3>
+      <a href={`/productos/${slug}`}>
+        {nombreEmpiezaConMarca && <span class="product-brand">{marca}</span>}{nombreSinMarca}
+      </a>
+    </h3>
     <p class="description">{descripcion}</p>
     <div class="bottom">
       <strong>{precio}</strong><button
@@ -182,6 +192,9 @@ const precio = new Intl.NumberFormat("es-CO", {
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.08rem;
+    text-transform: uppercase;
+  }
+  .product-brand {
     text-transform: uppercase;
   }
   h3 {

@@ -1,7 +1,7 @@
 ---
 productId: 34
 nombre: "by juccy Gooseberry AHA Jelly Cleanser"
-marca: "by juccy"
+marca: "By Juccy"
 categoria: skincare
 descripcion: "Limpiador facial en gel con efecto exfoliante suave, formulado con AHA, glucomanano y extractos frutales. Ayuda a retirar impurezas, células muertas y exceso de residuos mientras deja la piel más suave y luminosa."
 

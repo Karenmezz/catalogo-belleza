@@ -1,7 +1,7 @@
 ---
 productId: 30
 nombre: "Benefit BADgal BANG! Volumizing Mascara"
-marca: "Benefit Cosmetics"
+marca: "Benefit"
 categoria: maquillaje
 descripcion: "Máscara de pestañas voluminizadora y alargadora de color negro intenso, formulada para aportar volumen dramático sin dejar una sensación pesada. Su cepillo delgado y flexible ayuda a cubrir las pestañas desde la raíz hasta las puntas."
 

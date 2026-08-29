@@ -7,7 +7,10 @@ const products = defineCollection({
   schema: z.object({
     productId: z.number().int().positive(),
     nombre: z.string().min(2),
-    marca: z.string().min(2),
+    marca: z
+      .string()
+      .min(2)
+      .transform((marca) => marca.trim().toLocaleUpperCase("es")),
     categoria: z.enum([
       "maquillaje",
       "skincare",

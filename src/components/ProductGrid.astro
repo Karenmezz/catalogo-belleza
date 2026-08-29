@@ -8,9 +8,16 @@ interface Props {
   favoritos?: boolean;
 }
 const { products, titulo = "Productos de belleza y skincare", favoritos = false } = Astro.props;
-const marcas = [...new Set(products.map((product) => product.data.marca))].sort((a, b) =>
-  a.localeCompare(b, "es"),
-);
+const marcas = [
+  ...products
+    .reduce((uniqueBrands, product) => {
+      const marca = product.data.marca.trim();
+      const normalizedBrand = marca.toLocaleLowerCase("es");
+      if (!uniqueBrands.has(normalizedBrand)) uniqueBrands.set(normalizedBrand, marca);
+      return uniqueBrands;
+    }, new Map<string, string>())
+    .values(),
+].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
 ---
 
 <section
@@ -47,8 +54,10 @@ const marcas = [...new Set(products.map((product) => product.data.marca))].sort(
         ></label
       >
       <label
-        ><span class="sr-only">Ordenar por precio</span><select data-price-order
-          ><option value="default">Ordenar por precio</option><option value="price-asc"
+        ><span class="sr-only">Ordenar productos</span><select data-product-order
+          ><option value="default">Ordenar por</option><option value="recent"
+            >Agregados recientemente</option
+          ><option value="price-asc"
             >Precio: bajo a alto</option
           ><option value="price-desc">Precio: alto a bajo</option></select
         ></label
@@ -317,7 +326,7 @@ const marcas = [...new Set(products.map((product) => product.data.marca))].sort(
     });
     const search = root.querySelector<HTMLInputElement>("[data-search]");
     const brand = root.querySelector<HTMLSelectElement>("[data-brand]");
-    const priceOrder = root.querySelector<HTMLSelectElement>("[data-price-order]");
+    const productOrder = root.querySelector<HTMLSelectElement>("[data-product-order]");
     const categoryButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-category]")];
     const empty = root.querySelector<HTMLElement>("[data-no-results]");
     const count = root.querySelector<HTMLElement>("[data-visible-count]");
@@ -346,10 +355,13 @@ const marcas = [...new Set(products.map((product) => product.data.marca))].sort(
           if (show) visible++;
         });
         const ordered = [...cards];
-        if (priceOrder?.value === "price-asc")
+        if (productOrder?.value === "recent")
+          ordered.sort((a, b) => Number(b.dataset.productOrder) - Number(a.dataset.productOrder));
+        else if (productOrder?.value === "price-asc")
           ordered.sort((a, b) => Number(a.dataset.productPrice) - Number(b.dataset.productPrice));
-        else if (priceOrder?.value === "price-desc")
+        else if (productOrder?.value === "price-desc")
           ordered.sort((a, b) => Number(b.dataset.productPrice) - Number(a.dataset.productPrice));
+        else ordered.sort((a, b) => Number(a.dataset.productOrder) - Number(b.dataset.productOrder));
         ordered.forEach((card, index) => (card.style.order = String(index)));
         categoryButtons.forEach((button) =>
           button.classList.toggle("active", button.dataset.category === category),
@@ -367,13 +379,13 @@ const marcas = [...new Set(products.map((product) => product.data.marca))].sort(
     const clear = () => {
       if (search) search.value = "";
       if (brand) brand.value = "todos";
-      if (priceOrder) priceOrder.value = "default";
+      if (productOrder) productOrder.value = "default";
       category = "todos";
       render();
     };
     search?.addEventListener("input", render);
     brand?.addEventListener("change", render);
-    priceOrder?.addEventListener("change", render);
+    productOrder?.addEventListener("change", render);
     categoryButtons.forEach((button) =>
       button.addEventListener("click", () => {
         category = button.dataset.category || "todos";
