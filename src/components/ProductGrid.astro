@@ -339,13 +339,17 @@ const marcas = [
       category = initialCategory;
     const render = () => {
       try {
-        const term = (search?.value || "").trim().toLowerCase();
+        const term = (search?.value || "")
+          .trim()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLocaleLowerCase("es");
         const selectedBrand = brand?.value || "todos";
         const favoriteIds = root.dataset.favoritesOnly === "true" ? getFavorites() : [];
         let visible = 0;
         cards.forEach((card) => {
           const show =
-            (card.dataset.productName || "").includes(term) &&
+            (card.dataset.productSearch || card.dataset.productName || "").includes(term) &&
             (selectedBrand === "todos" || card.dataset.productBrand === selectedBrand) &&
             (category === "todos" || card.dataset.productCategory === category) &&
             (root.dataset.favoritesOnly !== "true" ||

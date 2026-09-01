@@ -9,6 +9,10 @@ const {
   marca,
   categoria,
   descripcion,
+  paraQueSirve,
+  beneficios,
+  modoUso,
+  recomendacion,
   precio: precioBase,
   cantidadDisponible,
   imagenes,
@@ -22,6 +26,23 @@ const categoryLabels = {
   "cuidado-corporal": "Cuidado corporal",
 } as const;
 const categoriaLabel = categoryLabels[categoria];
+const normalizeSearchText = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es");
+const searchText = normalizeSearchText(
+  [
+    nombre,
+    marca,
+    categoriaLabel,
+    descripcion,
+    paraQueSirve,
+    ...beneficios,
+    ...modoUso,
+    recomendacion || "",
+  ].join(" "),
+);
 const nombreEmpiezaConMarca = nombre
   .trimStart()
   .toLocaleLowerCase("es")
@@ -39,6 +60,7 @@ const precio = new Intl.NumberFormat("es-CO", {
   data-product-card
   data-product-id={productId}
   data-product-name={`${nombre} ${marca}`.toLowerCase()}
+  data-product-search={searchText}
   data-product-brand={marca.toLowerCase()}
   data-product-price={precioBase}
   data-product-order={product.data.orden}
