@@ -38,7 +38,7 @@ imagenes:
 
 orden: 15
 cantidadDisponible: 1
-activo: true
+activo: false
 ---
 
 Una crema calmante de uso diario para ayudar a mantener la piel hidratada, confortable y con una barrera saludable.
