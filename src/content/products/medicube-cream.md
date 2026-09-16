@@ -37,8 +37,8 @@ imagenes:
   - "/images/medicube-cream3.jpg"
 
 orden: 15
-cantidadDisponible: 1
-activo: false
+cantidadDisponible: 0
+activo: true
 ---
 
 Una crema calmante de uso diario para ayudar a mantener la piel hidratada, confortable y con una barrera saludable.
