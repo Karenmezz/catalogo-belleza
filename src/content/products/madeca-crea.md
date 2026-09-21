@@ -36,7 +36,7 @@ imagenes:
   - "/images/madeca-3.jpg"
 
 orden: 14
-cantidadDisponible: 1
+cantidadDisponible: 0
 activo: true
 ---
 
