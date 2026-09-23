@@ -37,7 +37,7 @@ imagenes:
   - "/images/medicube-cream3.jpg"
 
 orden: 15
-cantidadDisponible: 1
+cantidadDisponible: 0
 activo: true
 ---
 
